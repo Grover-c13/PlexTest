@@ -1,0 +1,71 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://cdn.dashjs.org/latest/dash.all.min.js"></script>
+
+
+	<video id="videoPlayer">
+		
+	</video>
+	
+
+</body>
+
+	<script type="text/javascript">
+	
+	function getUrlParameter(name) {
+		name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+		var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+		var results = regex.exec(location.search);
+		return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+	};
+	
+	var token = getUrlParameter("token");
+	var media_path = getUrlParameter("media_path");
+	var server = getUrlParameter("server");
+
+
+	
+	param = { 
+			hasMDE: 0,
+			path: media_path,
+			mediaIndex:0,
+			partIndex:0,
+			protocol: "dash",
+			fastSeek: 1,
+			directPlay: 0,
+			directStream: 1,
+			subtitleSize: 100,
+			audioBoost: 100,
+			location: "lan",
+			addDebugOverlay: 0,
+			autoAdjustQuality: 0,
+			directStreamAudio: 1,
+			session: "caaa8rb97b29ag55otab7k1i5o5",
+			subtitles: "burn",
+			"Accept-Language": "en-GB",
+			"X-Plex-Session-Identifier": "i3jephkwzcapruc9rsiwvsyi",
+			"X-Plex-Product": "Plex Embed",
+			"X-Plex-Version": "3.27.1",
+			"X-Plex-Client-Identifier": "jb1a51g8ancdz6mkaf3rkuyk",
+			"X-Plex-Platform": "Chrome",
+			"X-Plex-Platform-Version": "63.0",
+			"X-Plex-Device": "Windows",
+			"X-Plex-Device-Name":"Plex Embed",
+			"X-Plex-Device-Screen-Resolution": "1680x944,1680x1050",
+			"X-Plex-Token": token
+	  };
+	encoded = $.param(param);
+	var url = server + "/video/:/transcode/universal/start.mpd?" + encoded;
+	console.log(url);
+	var player = dashjs.MediaPlayer().create();
+	player.initialize(document.querySelector("#videoPlayer"), url, true);
+ 
+	</script>
+</html>
